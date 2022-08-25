@@ -1,11 +1,11 @@
 
-class WalletConnectionParams {
+class WalletConnectionConfig {
   String successURL;
   String contract;
   String appTitle;
   String failureURL;
 
 
-  WalletConnectionParams(
+  WalletConnectionConfig(
       {required this.contract, required this.appTitle, required this.successURL, required this.failureURL});
 }

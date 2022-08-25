@@ -1,10 +1,37 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter_test/flutter_test.dart';
-
+import 'package:flutter/material.dart';
 import 'package:near_api_flutter/near_api_flutter.dart';
-
 void main() {
-  test('adds one to input values', () {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  final String title;
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+
+  void requestSignIn() {
     // network and wallet config data
     const String networkId = "testnet";
     const String walletURL = 'https://wallet.testnet.near.org/login/?';
@@ -34,17 +61,28 @@ void main() {
 
     Wallet wallet = Wallet(walletURL, keyPair, walletConnectionParam);
     wallet.requestSignIn();
-    // wallet.requestSignInWithFullAccess();
-    //
-    // NEARConnectionConfig nearConnectionConfig = NEARConnectionConfig(
-    //     networkId, keyPair, walletURL, helperUrl, explorerUrl, rpcUrl);
-    //
-    // String contractId = "friendbook.msaudi.testnet";
-    // Contract contract = Contract(contractId, nearConnectionConfig);
-    // contract.call("writeSomething", '{"":"", "":"", "":""}');
-    // contract.view("writeSomething", '{"":"", "":"", "":""}');
-    //
-    // Account mohammedAccount = Account("msaudi.testnet");
-    // mohammedAccount.sendTokens(23, "mhassanist.testnet");
-  });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: Center(
+        child: Column(
+
+          mainAxisAlignment: MainAxisAlignment.center,
+
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: requestSignIn,
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
+      ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
 }
+
+

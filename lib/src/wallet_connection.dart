@@ -1,10 +1,9 @@
-import 'package:ed25519_edwards/ed25519_edwards.dart';
 import 'package:near_api_flutter/near_api_flutter.dart';
 import 'package:near_api_flutter/src/wallet_access_config.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Wallet {
-  WalletConnectionParams walletConnectionParams;
+  WalletConnectionConfig walletConnectionParams;
   String walletURL;
   KeyPair keyPair;
 
@@ -19,13 +18,6 @@ class Wallet {
     await launchUrl(Uri.parse(url),
         mode: LaunchMode.externalNonBrowserApplication);
   }
-
-  isSignedIn() {}
-  signOut() {}
-  getAccountId() {}
-  getAccount() {}
-  addKey() {}
-
   void requestSignInWithFullAccess() {
     //TODO
   }
