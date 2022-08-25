@@ -36,7 +36,7 @@ void main() {
     wallet.requestSignIn();
     // wallet.requestSignInWithFullAccess();
     //
-    // NEARConnectionConfig nearConnectionConfig = NEARConnectionConfig(
+    // NEARConnectionConfig nearConnectionConfig = (
     //     networkId, keyPair, walletURL, helperUrl, explorerUrl, rpcUrl);
     //
     // String contractId = "friendbook.msaudi.testnet";
