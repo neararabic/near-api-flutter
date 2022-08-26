@@ -48,9 +48,9 @@ class _MyHomePageState extends State<MyHomePage> {
   String methodArgs = '{"content":"message text","receiver":"htahir.testnet"}';
   String contractId = 'friendbook.hamzatest.testnet';
   String contractTitle = 'Friendbook';
-  String signer = 'hamzatest.testnet';
+  String signerId = 'hamzatest.testnet';
   double nearTransferAmount = 1;
-  double nearDepositAmount = 1;
+  double nearAmount = 1;
 
   late KeyPair limitedAccessKeyPair;
   late KeyPair fullAccessKeyPair;
@@ -229,7 +229,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   _buildUserId() {
     return Text(
-      "User: $signer",
+      "User: $signerId",
     );
   }
 
@@ -263,10 +263,46 @@ class _MyHomePageState extends State<MyHomePage> {
         helperUrl,
         explorerUrl,
         rpcUrl,
-        signer);
+        signerId);
 
     Contract contract = Contract(contractId, nearConnectionConfig);
     result = await contract.call(method, methodArgs);
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  _callMethodFullAccess() async {
+    NEARConnectionConfig nearConnectionConfig = NEARConnectionConfig(
+        networkId,
+        limitedAccessKeyPair,
+        walletURL,
+        helperUrl,
+        explorerUrl,
+        rpcUrl,
+        signerId);
+
+    Account account = Account(
+        contractId: contractId, nearConnectionConfig: nearConnectionConfig);
+    result = await account.call(method, methodArgs);
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  _callMethodFullAccessWithDeposit() async {
+    NEARConnectionConfig nearConnectionConfig = NEARConnectionConfig(
+        networkId,
+        limitedAccessKeyPair,
+        walletURL,
+        helperUrl,
+        explorerUrl,
+        rpcUrl,
+        signerId);
+
+    Account account = Account(
+        contractId: contractId, nearConnectionConfig: nearConnectionConfig);
+    result = await account.call(method, methodArgs, nearAmount);
     setState(() {
       isLoading = false;
     });
@@ -280,11 +316,29 @@ class _MyHomePageState extends State<MyHomePage> {
         helperUrl,
         explorerUrl,
         rpcUrl,
-        signer);
+        signerId);
 
     Contract contract = Contract(contractId, nearConnectionConfig);
-    result = await contract.callWithDeposit(
-        method, methodArgs, wallet, nearDepositAmount);
+    result =
+        await contract.callWithDeposit(method, methodArgs, wallet, nearAmount);
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  _transferNear() async {
+    NEARConnectionConfig nearConnectionConfig = NEARConnectionConfig(
+        networkId,
+        limitedAccessKeyPair,
+        walletURL,
+        helperUrl,
+        explorerUrl,
+        rpcUrl,
+        signerId);
+
+    Account account = Account(
+        contractId: contractId, nearConnectionConfig: nearConnectionConfig);
+    result = await account.transferNear(nearAmount, contractId);
     setState(() {
       isLoading = false;
     });
@@ -292,14 +346,26 @@ class _MyHomePageState extends State<MyHomePage> {
 
   _buildTransferNearButton() {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: () async {
+        setState(() {
+          isLoading = true;
+        });
+        _transferNear();
+        setState(() {});
+      },
       child: Text("Transfer ${nearTransferAmount.toString()} Near"),
     );
   }
 
   _buildFullAccessMethodCall() {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: () {
+        setState(() {
+          isLoading = true;
+        });
+        _callMethodFullAccess();
+        setState(() {});
+      },
       child: const Text("Call without deposit"),
     );
   }
@@ -319,14 +385,40 @@ class _MyHomePageState extends State<MyHomePage> {
 
   _buildFullAccessMethodCallWithDeposit() {
     return ElevatedButton(
-      onPressed: () {},
-      child: Text("Call with ${nearDepositAmount.toString()} Near deposit"),
+      onPressed: () {
+        setState(() {
+          isLoading = true;
+        });
+        _callMethodFullAccessWithDeposit();
+        setState(() {});
+      },
+      child: Text("Call with ${nearAmount.toString()} Near deposit"),
     );
   }
 
   _buildLoginFullAccessButton() {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: () {
+        // Generate Keys
+        limitedAccessKeyPair = KeyStore.newKeyPair();
+        if (kDebugMode) {
+          print(KeyStore.publicKeyToString(limitedAccessKeyPair.publicKey));
+        }
+
+        // Configure wallet connection
+        walletConnectionParam = WalletConnectionConfig(
+            contract: contractId,
+            appTitle: contractTitle,
+            loginSuccessURL: nearSignInSuccessUrl,
+            loginFailureURL: nearSignInFailUrl,
+            transactionSuccessURL: nearSignInSuccessUrl);
+
+        // Open near wallet in default browser
+        wallet = Wallet(walletURL, walletApproveTransactionUrl,
+            limitedAccessKeyPair, walletConnectionParam);
+
+        wallet.requestSignInWithFullAccess();
+      },
       child: const Text("Login Full Access"),
     );
   }

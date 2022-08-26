@@ -64,15 +64,15 @@ class Contract {
     String publicKey =
         KeyStore.publicKeyToString(nearConnectionConfig.keyPair.publicKey);
     return TransactionDTO(
-        'function_call',
-        nearConnectionConfig.signer,
-        publicKey,
-        nearAmount.toStringAsFixed(12),
-        gasFees,
-        contractId,
-        methodName,
-        methodArgs,
-        accessKey);
+        actionType: 'function_call',
+        signer: nearConnectionConfig.signer,
+        publicKey: publicKey,
+        nearAmount: nearAmount.toStringAsFixed(12),
+        gasFees: gasFees,
+        receiver: contractId,
+        methodName: methodName,
+        methodArgs: methodArgs,
+        accessKey: accessKey);
   }
 
   view(methodName, args) {

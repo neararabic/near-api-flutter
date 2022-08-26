@@ -20,8 +20,13 @@ class Wallet {
         mode: LaunchMode.externalNonBrowserApplication);
   }
 
-  requestSignInWithFullAccess() {
-    //TODO
+  requestSignInWithFullAccess() async {
+    String url =
+        '$walletURL&success_url=${walletConnectionParams.loginSuccessURL}&failure_url='
+        '${walletConnectionParams.loginFailureURL}&public_key=ed25519:${KeyStore.publicKeyToString(keyPair.publicKey)}';
+
+    await launchUrl(Uri.parse(url),
+        mode: LaunchMode.externalNonBrowserApplication);
   }
 
   //request transaction deposit approval from wallet

@@ -11,14 +11,14 @@ class TransactionDTO {
   String methodArgs;
   AccessKey accessKey;
 
-  TransactionDTO(
-      this.actionType,
-      this.signer,
-      this.publicKey,
-      this.nearAmount,
-      this.gasFees,
-      this.receiver,
-      this.methodName,
-      this.methodArgs,
-      this.accessKey);
+  TransactionDTO({required this.actionType,
+      required this.signer,
+      required this.publicKey,
+      required this.nearAmount,
+      required this.gasFees,
+      required this.receiver,
+      required this.methodName,
+      required this.methodArgs,
+      required this.accessKey}
+      );
 }
