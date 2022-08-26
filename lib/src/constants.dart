@@ -4,5 +4,4 @@ class Constants{
   static const String applicationJson = "application/json";
   static const String transactionSuccessMessage = 'Transaction Successful!';
   static const String transactionFailedMessage = 'Transaction failed';
-
 }

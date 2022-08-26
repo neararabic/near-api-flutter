@@ -1,11 +1,14 @@
-
 class WalletConnectionConfig {
-  String successURL;
   String contract;
   String appTitle;
-  String failureURL;
-
+  String loginSuccessURL;
+  String loginFailureURL;
+  String transactionSuccessURL;
 
   WalletConnectionConfig(
-      {required this.contract, required this.appTitle, required this.successURL, required this.failureURL});
+      {required this.contract,
+      required this.appTitle,
+      required this.loginSuccessURL,
+      required this.loginFailureURL,
+      required this.transactionSuccessURL});
 }

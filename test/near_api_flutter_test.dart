@@ -8,6 +8,8 @@ void main() {
     // network and wallet config data
     const String networkId = "testnet";
     const String walletURL = 'https://wallet.testnet.near.org/login/?';
+    const String walletApproveTransactionUrl =
+      'https://wallet.testnet.near.org/sign?';
     const String helperUrl = 'https://helper.testnet.near.org"';
     const String explorerUrl = 'https://explorer.testnet.near.org';
     const String rpcUrl = 'https://archival-rpc.testnet.near.org';
@@ -29,10 +31,11 @@ void main() {
     WalletConnectionConfig walletConnectionParam = WalletConnectionConfig(
         contract: "friendbook.msaudi.testnet",
         appTitle: "FriendBook",
-        successURL: nearSignInSuccessUrl,
-        failureURL: nearSignInFailUrl);
+        loginSuccessURL: nearSignInSuccessUrl,
+        loginFailureURL: nearSignInFailUrl,
+        transactionSuccessURL: nearSignInSuccessUrl);
 
-    Wallet wallet = Wallet(walletURL, keyPair, walletConnectionParam);
+    Wallet wallet = Wallet(walletURL, walletApproveTransactionUrl, keyPair, walletConnectionParam);
     wallet.requestSignIn();
     // wallet.requestSignInWithFullAccess();
     //

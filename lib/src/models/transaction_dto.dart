@@ -1,32 +1,24 @@
-import 'package:borsh_annotation/borsh_annotation.dart';
+import 'package:near_api_flutter/src/models/access_key.dart';
 
 class TransactionDTO {
-  String? actionType;
-  String? sender;
-  String? publicKey;
-  String? amount;
-  String? receiver;
-  String? networkId;
-  String? blockHash;
-  int? nonce;
-  Uint8List? signature;
-  String? encoded;
-  String? returnMessage;
-  String? methodName;
-  String? methodArgsString = '{}';
-  Map<String, dynamic>? methodArgs;
+  String actionType;
+  String signer;
+  String publicKey;
+  String nearAmount;
+  int gasFees;
+  String receiver;
+  String methodName;
+  String methodArgs;
+  AccessKey accessKey;
 
-  Map<String, dynamic> toJson() => {
-        "action_type": actionType,
-        "sender": sender,
-        "public_key": publicKey,
-        "amount": amount,
-        "receiver": receiver,
-        "network_id": networkId,
-        'block_hash': blockHash,
-        'nonce': nonce,
-        'method_name': methodName,
-        'method_args': methodArgs,
-        "signature": signature
-      };
+  TransactionDTO(
+      this.actionType,
+      this.signer,
+      this.publicKey,
+      this.nearAmount,
+      this.gasFees,
+      this.receiver,
+      this.methodName,
+      this.methodArgs,
+      this.accessKey);
 }

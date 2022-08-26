@@ -3,9 +3,7 @@ import 'dart:typed_data';
 import 'package:bs58/bs58.dart';
 import 'package:crypto/crypto.dart';
 import 'package:ed25519_edwards/ed25519_edwards.dart' as ed;
-import 'package:near_api_flutter/src/connection_config.dart';
 import 'package:near_api_flutter/src/models/keys/public_key.dart';
-import '../constants.dart';
 import '../models/actions/action_function_call.dart';
 import '../models/actions/action_transfer.dart';
 import '../models/transaction_dto.dart';
@@ -15,7 +13,6 @@ import '../models/signed_transactions/signed_transaction_transfer.dart';
 import '../models/transactions/transaction_function_call.dart';
 import '../models/transactions/transaction_transfer.dart';
 import '../utils.dart';
-import 'near_rpc_api.dart';
 
 /// The dart method for key generation and transaction signing
 class TransactionManager {
@@ -47,15 +44,14 @@ class TransactionManager {
           TransferAction(
               actionNumber: 3,
               transferActionArgs: TransferActionArgs(
-                  deposit:
-                      Utils.decodeNearDeposit(transaction.amount as String)))
+                  deposit: Utils.decodeNearDeposit(transaction.nearAmount)))
         ],
-        blockHash: base58.decode(transaction.blockHash as String),
-        nonce: BigInt.from(transaction.nonce as int),
-        publicKey: PublicKey(
-            data: base58.decode(transaction.publicKey as String), keyType: 0),
-        receiverId: transaction.receiver as String,
-        signerId: transaction.sender as String);
+        blockHash: base58.decode(transaction.accessKey.blockHash),
+        nonce: BigInt.from(transaction.accessKey.nonce),
+        publicKey:
+            PublicKey(data: base58.decode(transaction.publicKey), keyType: 0),
+        receiverId: transaction.receiver,
+        signerId: transaction.signer);
   }
 
   static FunctionCallTransaction _createFunctionCallTransaction(
@@ -65,37 +61,37 @@ class TransactionManager {
           FunctionCallAction(
               actionNumber: 2,
               functionCallActionArgs: FunctionCallActionArgs(
-                  methodName: transaction.methodName as String,
-                  args: transaction.methodArgsString as String,
-                  gas: BigInt.from(Constants.defaultGas),
-                  deposit: Utils.decodeNearDeposit("0")))
+                  methodName: transaction.methodName,
+                  args: transaction.methodArgs,
+                  gas: BigInt.from(transaction.gasFees),
+                  deposit: Utils.decodeNearDeposit(transaction.nearAmount)))
         ],
-        blockHash: base58.decode(transaction.blockHash as String),
-        nonce: BigInt.from(transaction.nonce as int),
-        publicKey: PublicKey(
-            data: base58.decode(transaction.publicKey as String), keyType: 0),
-        receiverId: transaction.receiver as String,
-        signerId: transaction.sender as String);
+        blockHash: base58.decode(transaction.accessKey.blockHash),
+        nonce: BigInt.from(transaction.accessKey.nonce),
+        publicKey:
+            PublicKey(data: base58.decode(transaction.publicKey), keyType: 0),
+        receiverId: transaction.receiver,
+        signerId: transaction.signer);
   }
 
   static Uint8List toSHA256(Uint8List serializedTransaction) {
     return Uint8List.fromList(sha256.convert(serializedTransaction).bytes);
   }
 
-  static Uint8List serializeSignedTransaction(TransactionDTO transaction) {
+  static Uint8List serializeSignedTransaction(
+      TransactionDTO transaction, Uint8List signature) {
     if (transaction.actionType == 'transfer') {
       TransferTransaction transferTransaction =
           _createTransferTransaction(transaction);
       SignedTransferTransaction signedTransferTransaction =
-          _createSignedTransferTransaction(
-              transferTransaction, transaction.signature as Uint8List);
+          _createSignedTransferTransaction(transferTransaction, signature);
       return signedTransferTransaction.toBorsh();
     } else if (transaction.actionType == 'function_call') {
       FunctionCallTransaction functionCallTransaction =
           _createFunctionCallTransaction(transaction);
       SignedFunctionCallTransaction signedFunctionCallTransaction =
           _createSignedFunctionCallTransaction(
-              functionCallTransaction, transaction.signature as Uint8List);
+              functionCallTransaction, signature);
       return signedFunctionCallTransaction.toBorsh();
     } else {
       return Uint8List(0);
@@ -118,34 +114,5 @@ class TransactionManager {
 
   static encodeSerialization(Uint8List serialization) {
     return base64Encode(serialization);
-  }
-
-  sendTransaction( TransactionDTO transaction, NEARConnectionConfig connectionConfig) async {
-    transaction.networkId = connectionConfig.networkId;
-    var accessKey = await NEARRpcApi.getAccessKey(transaction, connectionConfig.rpcUrl);
-    transaction.nonce = ++accessKey['nonce'];
-    transaction.blockHash = accessKey['block_hash'];
-
-    Uint8List serializedTransaction =
-    TransactionManager.serializeTransaction(transaction);
-    Uint8List hashedSerializedTx =
-    TransactionManager.toSHA256(serializedTransaction);
-
-    transaction.signature = TransactionManager.signTransaction(
-        connectionConfig.keyPair.privateKey, hashedSerializedTx);
-
-    Uint8List signedTransactionSerialization =
-    TransactionManager.serializeSignedTransaction(transaction);
-    transaction.encoded =
-        TransactionManager.encodeSerialization(signedTransactionSerialization);
-
-      if (transaction.encoded!.isNotEmpty) {
-        bool transactionSucceeded =
-        await NEARRpcApi.broadcastTransaction(transaction, connectionConfig.rpcUrl);
-        transactionSucceeded
-            ? transaction.returnMessage = Constants.transactionSuccessMessage
-            : transaction.returnMessage = Constants.transactionFailedMessage;
-      }
-
   }
 }
