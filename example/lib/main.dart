@@ -48,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String methodArgs = '{"content":"message text","receiver":"htahir.testnet"}';
   String contractId = 'friendbook.hamzatest.testnet';
   String contractTitle = 'Friendbook';
-  String signerId = 'hamzatest.testnet';
+  String signerId = 'mhassanist.testnet';
   double nearTransferAmount = 1;
   double nearAmount = 1;
 
@@ -95,6 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
   _buildAppCards() {
     if (isLoading == false) {
       return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _buildLimitedAccessCard(),
           _buildHorizontalSpace(),
@@ -194,7 +195,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   _buildLimitedAccessCallButtons() {
-    return Row(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -205,7 +206,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   _buildFullAccessCallButtons() {
-    return Row(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
