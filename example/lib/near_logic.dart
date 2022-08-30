@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:near_api_flutter/near_api_flutter.dart';
 
 class NEARTester {
@@ -54,22 +53,31 @@ class NEARTester {
     return result;
   }
 
-  static callMethodFullAccessWithDeposit(Contract contract, String method, args, nearAmount) async {
+  static callMethodFullAccessWithDeposit(
+      Contract contract, String method, args, nearAmount) async {
     var result = await contract.callFunction(method, args, nearAmount);
     return result;
   }
 
-  static callMethodLimitedAccessWithDeposit(Contract contract, String method, String walletURL, args, nearAmount, successUrl, failureUrl, approvalURL) async {
+  static callMethodLimitedAccessWithDeposit(
+      Contract contract,
+      String method,
+      String walletURL,
+      args,
+      nearAmount,
+      successUrl,
+      failureUrl,
+      approvalURL) async {
     // Open near wallet in default browser
     var wallet = Wallet(walletURL);
 
-    var result = await contract.callFunctionWithDeposit(method, args, wallet, nearAmount, successUrl, failureUrl, approvalURL);
+    var result = await contract.callFunctionWithDeposit(
+        method, args, wallet, nearAmount, successUrl, failureUrl, approvalURL);
     return result;
   }
 
   static transferNear(Account account, nearAmount, receiver) async {
     var result = await account.sendTokens(nearAmount, receiver);
     return result;
-
   }
 }

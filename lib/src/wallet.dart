@@ -1,4 +1,3 @@
-import 'package:near_api_flutter/near_api_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// redirects users to NEAR wallet for key management
