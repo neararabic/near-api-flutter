@@ -36,7 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String result = '';
   String contractId = 'friendbook.hamzatest.testnet';
   String method = 'submitMessage';
-  String signerId = 'mhassanist.testnet';
+  String signerId = 'hamzatest.testnet';
 
   late Account connectedAccount;
 
@@ -90,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   String walletURL = 'https://wallet.testnet.near.org/login/?';
                   String contractId = 'friendbook.hamzatest.testnet';
                   String appTitle = 'Friendbook';
-                  String accountId = 'mhassanist.testnet';
+                  String accountId = 'hamzatest.testnet';
                   String nearSignInSuccessUrl =
                       'https://near-transaction-serializer.herokuapp.com/success';
                   String nearSignInFailUrl =
@@ -191,7 +191,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   String walletURL = 'https://wallet.testnet.near.org/login/?';
                   String contractId = 'friendbook.hamzatest.testnet';
                   String appTitle = 'Friendbook';
-                  String accountId = 'mhassanist.testnet';
+                  String accountId = 'hamzatest.testnet';
                   String nearSignInSuccessUrl =
                       'https://near-transaction-serializer.herokuapp.com/success';
                   String nearSignInFailUrl =
@@ -204,33 +204,33 @@ class _MyHomePageState extends State<MyHomePage> {
                       appTitle,
                       nearSignInSuccessUrl,
                       nearSignInFailUrl);
-
-
                 },
                 child: const Text("Login Full Access"),
               ),
               ElevatedButton(
                 onPressed: () async {
-                  result = await NEARTester.transferNear(connectedAccount,1.0,"msaudi.testnet");
+                  result = await NEARTester.transferNear(
+                      connectedAccount, 1.0, "hamzatest.testnet");
                   setState(() {});
                 },
                 child: Text("Transfer ${"1".toString()} Near"),
               ),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   String method = 'submitMessage';
                   String methodArgs =
                       '{"content":"message text","receiver":"htahir.testnet"}';
                   String contractId = 'friendbook.hamzatest.testnet';
                   Contract contract = Contract(contractId, connectedAccount);
 
-                  result = NEARTester.callMethodFullAccess(contract,method,methodArgs);
+                  result = await NEARTester.callMethodFullAccess(
+                      contract, method, methodArgs);
                   setState(() {});
                 },
                 child: const Text("Call without deposit"),
               ),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   String method = 'submitMessage';
                   String methodArgs =
                       '{"content":"message text","receiver":"htahir.testnet"}';
@@ -238,7 +238,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
                   Contract contract = Contract(contractId, connectedAccount);
 
-                  result = NEARTester.callMethodFullAccessWithDeposit(contract,method,methodArgs,1.0);
+                  result = await NEARTester.callMethodFullAccessWithDeposit(
+                      contract, method, methodArgs, 1.0);
                   setState(() {});
                 },
                 child: Text("Call with ${"1".toString()} Near deposit"),
@@ -270,8 +271,4 @@ class _MyHomePageState extends State<MyHomePage> {
       return Container();
     }
   }
-
-
-
-
 }
