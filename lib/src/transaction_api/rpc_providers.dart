@@ -1,13 +1,27 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:near_api_flutter/near_api_flutter.dart';
 import 'package:near_api_flutter/src/models/access_key.dart';
 import '../constants.dart';
 
-class NEARRpcApi {
+class NEARTestNetRPCProvider extends RPCProvider{
+
+  static final NEARTestNetRPCProvider _nearTestNetRPCProvider = NEARTestNetRPCProvider._internal();
+
+  factory NEARTestNetRPCProvider() {
+    return _nearTestNetRPCProvider;
+  }
+
+  NEARTestNetRPCProvider._internal():super('https://archival-rpc.testnet.near.org');
+}
+
+abstract class RPCProvider {
+  String providerURL;
+
+  RPCProvider(this.providerURL);
+
   //call near RPC API's getAccessKeys for nonce and block hash
-  static Future<AccessKey> getAccessKey(
-      NEARConnectionConfig nearConnectionConfig) async {
+  Future<AccessKey> getAccessKey(
+      accountId, publicKey) async {
     var body = json.encode({
       "jsonrpc": "2.0",
       "id": "dontcare",
@@ -15,16 +29,16 @@ class NEARRpcApi {
       "params": {
         "request_type": "view_access_key",
         "finality": "final",
-        "account_id": nearConnectionConfig.signer,
+        "account_id": accountId,
         "public_key":
-            "ed25519:${KeyStore.publicKeyToString(nearConnectionConfig.keyPair.publicKey)}"
+            "ed25519:$publicKey"
       }
     });
     Map<String, String> headers = {};
     headers[Constants.contentType] = Constants.applicationJson;
 
     http.Response responseData = await http.post(
-        Uri.parse(nearConnectionConfig.rpcUrl),
+        Uri.parse(providerURL),
         headers: headers,
         body: body);
 
@@ -33,8 +47,8 @@ class NEARRpcApi {
   }
 
   //broadcastTransaction
-  static Future<String> broadcastTransaction(
-      String encodedTransaction, nearRPCUrl) async {
+   Future<String> broadcastTransaction(
+      String encodedTransaction) async {
     var body = json.encode({
       "jsonrpc": "2.0",
       "id": "dontcare",
@@ -46,7 +60,7 @@ class NEARRpcApi {
 
     try {
       http.Response responseData =
-          await http.post(Uri.parse(nearRPCUrl), headers: headers, body: body);
+          await http.post(Uri.parse(providerURL), headers: headers, body: body);
       Map jsonBody = jsonDecode(responseData.body);
       return json.encode(jsonBody['result']);
     } catch (exp) {

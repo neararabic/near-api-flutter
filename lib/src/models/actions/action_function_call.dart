@@ -4,7 +4,7 @@ part 'action_function_call.g.dart';
 @BorshSerializable()
 class FunctionCallAction with _$FunctionCallAction {
   factory FunctionCallAction({
-    @BU8() required int actionNumber,
+    @BU8() required int actionNumber, //ToDO try to use enum
     // 0: CreateAccount;
     // 1: DeployContract;
     // 2: FunctionCall;

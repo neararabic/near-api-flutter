@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:near_api_flutter/near_api_flutter.dart';
 
 void main() {
+  //TODO
   test('adds one to input values', () {
     // network and wallet config data
     const String networkId = "testnet";
@@ -24,19 +25,19 @@ void main() {
       print(KeyStore.publicKeyToString(keyPair.publicKey));
     }
 
-    assert(keyPair.privateKey.bytes.isNotEmpty);
-    assert(keyPair.publicKey.bytes.isNotEmpty);
-
-    //wallet login
-    WalletConnectionConfig walletConnectionParam = WalletConnectionConfig(
-        contract: "friendbook.msaudi.testnet",
-        appTitle: "FriendBook",
-        loginSuccessURL: nearSignInSuccessUrl,
-        loginFailureURL: nearSignInFailUrl,
-        transactionSuccessURL: nearSignInSuccessUrl);
-
-    Wallet wallet = Wallet(walletURL, walletApproveTransactionUrl, keyPair, walletConnectionParam);
-    wallet.requestSignIn();
+    // assert(keyPair.privateKey.bytes.isNotEmpty);
+    // assert(keyPair.publicKey.bytes.isNotEmpty);
+    //
+    // //wallet login
+    // WalletConnectionArgs walletConnectionParam = WalletConnectionArgs(
+    //     contract: "friendbook.msaudi.testnet",
+    //     appTitle: "FriendBook",
+    //     loginSuccessURL: nearSignInSuccessUrl,
+    //     loginFailureURL: nearSignInFailUrl,
+    //     transactionSuccessURL: nearSignInSuccessUrl);
+    //
+    // Wallet wallet = Wallet(walletURL, walletApproveTransactionUrl, keyPair, walletConnectionParam);
+    // wallet.connectLimitedAccess();
     // wallet.requestSignInWithFullAccess();
     //
     // NEARConnectionConfig nearConnectionConfig = (
