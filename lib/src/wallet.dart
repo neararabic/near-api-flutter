@@ -12,7 +12,7 @@ class Wallet {
     //final launcher=injector.getService<luancher>()
   }
   //account, contract, appTitle,...
-  connectLimitedAccess(
+  connect(
       contractId, appTitle, successURL, failureURL, publicKey) async {
     String url = '$walletURL&success_url=$successURL'
         '&failure_url=$failureURL'

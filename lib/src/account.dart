@@ -12,6 +12,8 @@ import 'package:near_api_flutter/src/transaction_api/transaction_manager.dart';
 class Account {
   String accountId;
   KeyPair keyPair;
+
+  String get publicKey =>  KeyStore.publicKeyToString(keyPair.publicKey);
   RPCProvider
       provider; //need for the account to call methods and create transactions
   Account(

@@ -5,18 +5,16 @@ class NEARTester {
       signInSuccessUrl, signInFailureUrl) {
     // Generate Keys
     var keyPair = KeyStore.newKeyPair();
-    var publicKey = KeyStore.publicKeyToString(keyPair.publicKey);
 
     // Open near wallet in default browser
-    var wallet = Wallet(walletURL);
-
-    wallet.connectLimitedAccess(
-        contractId, appTitle, signInSuccessUrl, signInFailureUrl, publicKey);
-
     Account account = Account(
         accountId: accountId,
         keyPair: keyPair,
         provider: NEARTestNetRPCProvider());
+
+    var wallet = Wallet(walletURL);
+    wallet.connect(
+        contractId, appTitle, signInSuccessUrl, signInFailureUrl, account.publicKey);
 
     return account; //connected account
   }
