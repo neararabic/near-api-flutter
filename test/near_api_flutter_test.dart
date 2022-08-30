@@ -4,7 +4,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:near_api_flutter/near_api_flutter.dart';
 
 void main() {
-  //TODO
   test('adds one to input values', () {
     // network and wallet config data
     const String networkId = "testnet";

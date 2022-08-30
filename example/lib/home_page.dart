@@ -34,7 +34,6 @@ class _MyHomePageState extends State<MyHomePage> {
   // bool isLoading = false;
 
   String result = '';
-  //TODO SET THESE FIRST BEFORE TESTING
   String contractId = 'friendbook.hamzatest.testnet';
   String method = 'submitMessage';
   String signerId = 'mhassanist.testnet';
