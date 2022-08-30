@@ -6,14 +6,6 @@ part 'action_transfer.g.dart';
 class TransferAction with _$TransferAction {
   factory TransferAction({
     @BU8() required int actionNumber,
-    // 0: CreateAccount;
-    // 1: DeployContract;
-    // 2: FunctionCall;
-    // 3: Transfer;
-    // 4: Stake;
-    // 5: AddKey;
-    // 6: DeleteKey;
-    // 7: DeleteAccount;
     @BTransferActionArgs() required TransferActionArgs transferActionArgs,
   }) = _TransferAction;
 

@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'package:near_api_flutter/near_api_flutter.dart';
 import 'package:near_api_flutter/src/constants.dart';
 import 'package:near_api_flutter/src/models/access_key.dart';
+import 'package:near_api_flutter/src/models/action_types.dart';
 import 'package:near_api_flutter/src/models/transaction_dto.dart';
 import 'package:near_api_flutter/src/transaction_api/rpc_providers.dart';
 import 'package:near_api_flutter/src/transaction_api/transaction_manager.dart';
@@ -11,19 +12,19 @@ import 'package:near_api_flutter/src/transaction_api/transaction_manager.dart';
 class Account {
   String accountId;
   KeyPair keyPair;
-  RPCProvider provider;//need for the account to call methods and create transactions
-  Account({required this.accountId, required this.keyPair, required this.provider});
-
+  RPCProvider
+      provider; //need for the account to call methods and create transactions
+  Account(
+      {required this.accountId, required this.keyPair, required this.provider});
 
   Future<String> sendTokens(double nearAmount, String receiver) async {
-    AccessKey accessKey = await findAccessKey();
+    AccessKey accessKey = await getAccessKey();
 
     // Create Transaction
     accessKey.nonce++;
     String publicKey = KeyStore.publicKeyToString(keyPair.publicKey);
 
-    TransactionDTO transaction = TransactionDTO(
-        actionType: 'transfer',
+    Transaction transaction = Transaction(
         signer: accountId,
         publicKey: publicKey,
         nearAmount: nearAmount.toStringAsFixed(12),
@@ -31,11 +32,12 @@ class Account {
         receiver: receiver,
         methodName: '',
         methodArgs: '',
-        accessKey: accessKey);
+        accessKey: accessKey,
+        actionType: ActionType.transfer);
 
     // Serialize Transaction
     Uint8List serializedTransaction =
-        TransactionManager.serializeTransaction(transaction);
+        TransactionManager.serializeTransferTransaction(transaction);
     Uint8List hashedSerializedTx =
         TransactionManager.toSHA256(serializedTransaction);
 
@@ -45,17 +47,16 @@ class Account {
 
     // Serialize Signed Transaction
     Uint8List serializedSignedTransaction =
-        TransactionManager.serializeSignedTransaction(transaction, signature);
+        TransactionManager.serializeSignedTransferTransaction(transaction, signature);
     String encodedTransaction =
         TransactionManager.encodeSerialization(serializedSignedTransaction);
 
     // Broadcast Transaction
-    return await provider
-        .broadcastTransaction(encodedTransaction);
+    return await provider.broadcastTransaction(encodedTransaction);
   }
 
-  Future<AccessKey> findAccessKey() async {
-    return await provider
-        .getAccessKey(accountId, KeyStore.publicKeyToString(keyPair.publicKey));
+  Future<AccessKey> getAccessKey() async {
+    return await provider.getAccessKey(
+        accountId, KeyStore.publicKeyToString(keyPair.publicKey));
   }
 }

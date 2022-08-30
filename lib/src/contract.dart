@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'package:near_api_flutter/near_api_flutter.dart';
 import 'package:near_api_flutter/src/constants.dart';
 import 'package:near_api_flutter/src/models/access_key.dart';
+import 'package:near_api_flutter/src/models/action_types.dart';
 import 'package:near_api_flutter/src/models/transaction_dto.dart';
 import 'package:near_api_flutter/src/transaction_api/rpc_providers.dart';
 import 'package:near_api_flutter/src/transaction_api/transaction_manager.dart';
@@ -19,14 +20,14 @@ class Contract extends Account {
 
   Future<String> callFunction(String functionName, String functionArgs,
       [double nearAmount = 0.0, int gasFees = Constants.defaultGas]) async {
-    AccessKey accessKey = await findAccessKey();
+    AccessKey accessKey = await getAccessKey();
 
     // Create Transaction
     accessKey.nonce++;
     String publicKey = KeyStore.publicKeyToString(keyPair.publicKey);
 
-    TransactionDTO transaction = TransactionDTO(
-        actionType: 'function_call',
+    Transaction transaction = Transaction(
+        actionType: ActionType.functionCall,
         signer: accountId,
         publicKey: publicKey,
         nearAmount: nearAmount.toStringAsFixed(12),
@@ -38,7 +39,7 @@ class Contract extends Account {
 
     // Serialize Transaction
     Uint8List serializedTransaction =
-    TransactionManager.serializeTransaction(transaction);
+    TransactionManager.serializeFunctionCallTransaction(transaction);
     Uint8List hashedSerializedTx =
     TransactionManager.toSHA256(serializedTransaction);
 
@@ -48,7 +49,7 @@ class Contract extends Account {
 
     // Serialize Signed Transaction
     Uint8List serializedSignedTransaction =
-    TransactionManager.serializeSignedTransaction(transaction, signature);
+    TransactionManager.serializeSignedFunctionCallTransaction(transaction, signature);
     String encodedTransaction =
     TransactionManager.encodeSerialization(serializedSignedTransaction);
 
@@ -57,17 +58,17 @@ class Contract extends Account {
         .broadcastTransaction(encodedTransaction);
   }
 
-  Future<String> callWithDeposit(
+  Future<String> callFunctionWithDeposit(
       String methodName, String methodArgs, Wallet wallet, double nearAmount, successURL, failureURL, approvalURL,
       [int gasFees = Constants.defaultGas]) async {
-    AccessKey accessKey = await findAccessKey();
+    AccessKey accessKey = await getAccessKey();
 
     // Create Transaction
     accessKey.nonce++;
     String publicKey = KeyStore.publicKeyToString(keyPair.publicKey);
 
-    TransactionDTO transaction = TransactionDTO(
-        actionType: 'function_call',
+    Transaction transaction = Transaction(
+        actionType: ActionType.functionCall,
         signer: accountId,
         publicKey: publicKey,
         nearAmount: nearAmount.toStringAsFixed(12),
@@ -78,7 +79,7 @@ class Contract extends Account {
         accessKey: accessKey);
     // Serialize Transaction
     Uint8List serializedTransaction =
-    TransactionManager.serializeTransaction(transaction);
+    TransactionManager.serializeFunctionCallTransaction(transaction);
 
     // Sign with wallet if there is a deposit
     String transactionEncoded =
@@ -86,6 +87,7 @@ class Contract extends Account {
     wallet.requestDepositApproval(transactionEncoded, successURL, failureURL,approvalURL);
     return "Please follow wallet to approve transaction";
   }
+
   Future<String> viewFunction(String functionName, String functionArgs,
       [double nearAmount = 0.0, int gasFees = Constants.defaultGas]) async {
     return callFunction(functionName, functionArgs, nearAmount, gasFees);

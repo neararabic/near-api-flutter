@@ -1,7 +1,8 @@
 import 'package:near_api_flutter/src/models/access_key.dart';
+import 'package:near_api_flutter/src/models/action_types.dart';
 
-class TransactionDTO {
-  String actionType;
+class Transaction {
+  ActionType actionType;
   String signer;
   String publicKey;
   String nearAmount;
@@ -11,7 +12,8 @@ class TransactionDTO {
   String methodArgs;
   AccessKey accessKey;
 
-  TransactionDTO({required this.actionType,
+   Transaction(
+      {required this.actionType,
       required this.signer,
       required this.publicKey,
       required this.nearAmount,
@@ -19,6 +21,7 @@ class TransactionDTO {
       required this.receiver,
       required this.methodName,
       required this.methodArgs,
-      required this.accessKey}
-      );
+      required this.accessKey});
+
+
 }

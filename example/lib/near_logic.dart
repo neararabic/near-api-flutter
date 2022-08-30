@@ -63,7 +63,7 @@ class NEARTester {
     // Open near wallet in default browser
     var wallet = Wallet(walletURL);
 
-    var result = await contract.callWithDeposit(method, args, wallet, nearAmount, successUrl, failureUrl, approvalURL);
+    var result = await contract.callFunctionWithDeposit(method, args, wallet, nearAmount, successUrl, failureUrl, approvalURL);
     return result;
   }
 
