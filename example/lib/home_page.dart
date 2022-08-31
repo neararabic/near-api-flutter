@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:example/near_logic.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
   //
   // bool isLoading = false;
 
-  String result = '';
+  Map response = {};
   String contractId = 'friendbook.hamzatest.testnet';
   String method = 'submitMessage';
   String signerId = 'hamzatest.testnet';
@@ -68,7 +70,8 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 buildLimitedAccessCard(),
                 buildFullAccessCard(),
-                buildResultHashCard(),
+                buildFunctionResponseCard(),
+                buildTransactionResponseCard(),
               ],
             )
           ],
@@ -115,9 +118,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   String contractId = 'friendbook.hamzatest.testnet';
 
                   Contract contract = Contract(contractId, connectedAccount);
-                  result = await NEARTester.callMethodLimitedAccess(
+                  response = await NEARTester.callMethodLimitedAccess(
                       contract, method, methodArgs);
-                  print(result);
                   setState(() {});
                 },
                 child: const Text("Call without deposit"),
@@ -126,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 //call with deposit
                 onPressed: () async {
                   setState(() {
-                    result = '';
+                    response = {};
                   });
 
                   String method = 'submitMessage';
@@ -143,15 +145,16 @@ class _MyHomePageState extends State<MyHomePage> {
                   String walletApproveTransactionUrl =
                       'https://wallet.testnet.near.org/sign?';
 
-                  result = await NEARTester.callMethodLimitedAccessWithDeposit(
-                      contract,
-                      method,
-                      walletURL,
-                      methodArgs,
-                      1.0,
-                      nearSignInSuccessUrl,
-                      nearSignInFailUrl,
-                      walletApproveTransactionUrl);
+                  response =
+                      await NEARTester.callMethodLimitedAccessWithDeposit(
+                          contract,
+                          method,
+                          walletURL,
+                          methodArgs,
+                          1.0,
+                          nearSignInSuccessUrl,
+                          nearSignInFailUrl,
+                          walletApproveTransactionUrl);
                   setState(() {});
                 },
                 child: Text("Call with ${"1".toString()} Near deposit"),
@@ -161,12 +164,31 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  buildResultHashCard() {
-    if (result != '') {
+  buildTransactionResponseCard() {
+    if (response.isNotEmpty) {
       return Card(
           child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-        child: buildCopyableText("Result", result),
+        child: buildCopyableText("Transaction Response", json.encode(response)),
+      ));
+    } else {
+      return Container();
+    }
+  }
+
+  buildFunctionResponseCard() {
+    if (response.isNotEmpty &&
+        response.containsKey('result') &&
+        response['result'].containsKey('status') &&
+        response['result']['status'].containsKey('SuccessValue') &&
+        response['result']['status']['SuccessValue'] != '') {
+      return Card(
+          child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+        child: buildCopyableText(
+            "Function Respones",
+            (utf8.decode(base64.decoder
+                .convert(response['result']['status']['SuccessValue'])))),
       ));
     } else {
       return Container();
@@ -209,7 +231,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  result = await NEARTester.transferNear(
+                  response = await NEARTester.transferNear(
                       connectedAccount, 1.0, "hamzatest.testnet");
                   setState(() {});
                 },
@@ -223,7 +245,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   String contractId = 'friendbook.hamzatest.testnet';
                   Contract contract = Contract(contractId, connectedAccount);
 
-                  result = await NEARTester.callMethodFullAccess(
+                  response = await NEARTester.callMethodFullAccess(
                       contract, method, methodArgs);
                   setState(() {});
                 },
@@ -238,7 +260,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                   Contract contract = Contract(contractId, connectedAccount);
 
-                  result = await NEARTester.callMethodFullAccessWithDeposit(
+                  response = await NEARTester.callMethodFullAccessWithDeposit(
                       contract, method, methodArgs, 1.0);
                   setState(() {});
                 },

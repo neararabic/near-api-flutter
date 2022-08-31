@@ -18,7 +18,7 @@ class Account {
   Account(
       {required this.accountId, required this.keyPair, required this.provider});
 
-  Future<String> sendTokens(double nearAmount, String receiver) async {
+  Future<Map<dynamic, dynamic>> sendTokens(double nearAmount, String receiver) async {
     AccessKey accessKey = await getAccessKey();
 
     // Create Transaction
