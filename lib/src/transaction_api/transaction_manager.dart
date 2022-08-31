@@ -81,7 +81,7 @@ class TransactionManager {
             functionCallTransaction: FunctionCallTransaction(
                 functionCallActions: [
                   FunctionCallAction(
-                      actionNumber: 2,
+                      actionNumber: ActionType.functionCall.value,
                       functionCallActionArgs: FunctionCallActionArgs(
                           methodName: transaction.methodName,
                           args: transaction.methodArgs,

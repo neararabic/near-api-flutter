@@ -4,7 +4,6 @@ import 'package:near_api_flutter/src/constants.dart';
 import 'package:near_api_flutter/src/models/access_key.dart';
 import 'package:near_api_flutter/src/models/action_types.dart';
 import 'package:near_api_flutter/src/models/transaction_dto.dart';
-import 'package:near_api_flutter/src/transaction_api/rpc_providers.dart';
 import 'package:near_api_flutter/src/transaction_api/transaction_manager.dart';
 
 ///This class provides common account related RPC calls
