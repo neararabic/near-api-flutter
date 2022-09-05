@@ -4,7 +4,7 @@ NEAR Flutter API is an in-progress work to implement a library to interact with 
 
 # Currently Implemented Features
 - Genererate Keys
-- Connect Wallet With Limited and Full Access Keys
+- Connect Wallet With Limited or Full Access Keys
 - Send NEAR Tokens
 - Call smart-contract methods
 
