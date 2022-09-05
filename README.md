@@ -6,6 +6,7 @@ NEAR Flutter API is an in-progress work to implement a library to interact with 
 - Genererate Keys
 - Connect Wallet With Limited and Full Access Keys
 - Send Transactions
+- Call smart-contract methods
 
 
 # Sample Usage
