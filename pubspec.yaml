@@ -1,5 +1,5 @@
 name: near_api_flutter
-description: A new Flutter package project.
+description: NEAR Flutter API is a complete library to interact with the NEAR blockchain. Use it to build flutter apps that can connect and send transactions to the NEAR Blockchain
 version: 0.0.1
 homepage: http://mkdf.com
 
