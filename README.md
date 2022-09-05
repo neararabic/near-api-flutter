@@ -31,6 +31,5 @@ wallet.connect(
     var result = await contract.callFunctionWithDeposit(
         method, args, wallet, nearAmount, successUrl, failureUrl, approvalURL);
     return result;
-  }
 
 var result = await account.sendTokens(nearAmount, receiver);
