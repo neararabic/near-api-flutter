@@ -1,3 +1,11 @@
-## 0.0.1
+## 0.0.3-alpha
+Added flutter example to the package doc.
 
-* TODO: Describe initial release.
+## 0.0.2-beta
+Added basic usage instructions to the docs.
+
+## 0.0.2-alpha
+Added basic usage instructions to the docs.
+
+## 0.0.1
+Initial release.
