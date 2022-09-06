@@ -6,7 +6,7 @@ NEAR Flutter API is here to help mobile developers to build flutter apps that co
 - Genererate Keys
 - Connect Wallet With Limited or Full Access Keys
 - Send NEAR Tokens
-- Call smart-contract methods
+- Call Smart Contract methods
 
 # In-progerss Features
 - Create Account
