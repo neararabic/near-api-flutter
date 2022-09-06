@@ -1,6 +1,6 @@
 # NEAR Flutter API
 
-NEAR Flutter API is here to help mobile developers to build flutter apps that connect and send transactions to the NEAR PROTOCOL Blockchain
+NEAR Flutter API is here to empower mobile developers to build flutter apps that connect and send transactions to the NEAR PROTOCOL Blockchain
 
 # Currently Implemented Features
 - Genererate Keys
