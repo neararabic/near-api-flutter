@@ -1,6 +1,6 @@
 # NEAR FLutter API
 
-NEAR Flutter API is an in-progress work to implement a library to interact with the NEAR blockchain. You can use it to build flutter apps that connect and send transactions to the NEAR Blockchain
+NEAR Flutter API is here to help mobile developers to build flutter apps that connect and send transactions to the NEAR PROTOCOL Blockchain
 
 # Currently Implemented Features
 - Genererate Keys
@@ -8,6 +8,8 @@ NEAR Flutter API is an in-progress work to implement a library to interact with 
 - Send NEAR Tokens
 - Call smart-contract methods
 
+# In-progerss Features
+- Create Account
 
 # Sample Usage
 
@@ -16,30 +18,33 @@ NEAR Flutter API is an in-progress work to implement a library to interact with 
 var keyPair = KeyStore.newKeyPair();
 ```
 
-## Open near wallet in default browser
+## Connect Wallet
 ```
 Account account = Account(accountId: accountId, keyPair: keyPair, provider: NEARTestNetRPCProvider());
 var wallet = Wallet(walletURL);
 wallet.connect(contractId, appTitle, signInSuccessUrl, signInFailureUrl , account.publicKey);
 ```
 
-## Send Tokens with (Full Access Key)
+## Send Tokens (Full Access Key)
 ```
 await account.sendTokens(nearAmount, receiver);
 ```
 
-## Call smart-contract methods without deposit
+## Call Smart Contract Methods (without deposit)
 ```
 Contract contract = Contract(contractId, account);
 var result = await contract.callFunction(method, args);
 ```
 
-## Call smart-contract methods with deposit (Full Access Key)
+## Call Smart Contract Methods (without deposit) 
+```
+var result = await contract.callFunctionWithDeposit(method, args, wallet, nearAmount, successUrl, failureUrl, approvalURL);
+```
+
+## Call Smart Contract Methods (without deposit) (Full Access Key)
+Calls with a full access key will not invoke wallets.
 ```
 var result = await contract.callFunction(method, args, nearAmount);
 ```
 
-## Call smart-contract methods with deposit (Limited Access Key)
-```
-var result = await contract.callFunctionWithDeposit(method, args, wallet, nearAmount, successUrl, failureUrl, approvalURL);
-```
+
