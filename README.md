@@ -33,12 +33,12 @@ Contract contract = Contract(contractId, account);
 var result = await contract.callFunction(method, args);
 ```
 
-## Call Smart Contract Methods (without deposit) 
+## Call Smart Contract Methods (with deposit) 
 ```
 var result = await contract.callFunctionWithDeposit(method, args, wallet, nearAmount, successUrl, failureUrl, approvalURL);
 ```
 
-## Call Smart Contract Methods (without deposit) (Full Access Key)
+## Call Smart Contract Methods (with deposit) using a Full Access Key
 Calls with a full access key will not invoke wallets.
 ```
 var result = await contract.callFunction(method, args, nearAmount);
