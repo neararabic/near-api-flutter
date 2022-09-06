@@ -16,7 +16,7 @@ class Contract {
   Future<Map<dynamic, dynamic>> callFunction(
       String functionName, String functionArgs,
       [double nearAmount = 0.0, int gasFees = Constants.defaultGas]) async {
-    AccessKey accessKey = await callerAccount.getAccessKey();
+    AccessKey accessKey = await callerAccount.findAccessKey();
 
     // Create Transaction
     accessKey.nonce++;
@@ -65,7 +65,7 @@ class Contract {
       failureURL,
       approvalURL,
       [int gasFees = Constants.defaultGas]) async {
-    AccessKey accessKey = await callerAccount.getAccessKey();
+    AccessKey accessKey = await callerAccount.findAccessKey();
 
     // Create Transaction
     accessKey.nonce++;

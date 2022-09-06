@@ -21,7 +21,7 @@ abstract class RPCProvider {
   RPCProvider(this.providerURL);
 
   //call near RPC API's getAccessKeys for nonce and block hash
-  Future<AccessKey> getAccessKey(accountId, publicKey) async {
+  Future<AccessKey> findAccessKey(accountId, publicKey) async {
     var body = json.encode({
       "jsonrpc": "2.0",
       "id": "dontcare",
@@ -61,7 +61,7 @@ abstract class RPCProvider {
       Map jsonBody = jsonDecode(responseData.body);
       return jsonBody;
     } catch (exp) {
-      return {"EXCEPTION" : exp};
+      return {"EXCEPTION": exp};
     }
   }
 }

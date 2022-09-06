@@ -12,14 +12,15 @@ class Account {
   String accountId;
   KeyPair keyPair;
 
-  String get publicKey =>  KeyStore.publicKeyToString(keyPair.publicKey);
+  String get publicKey => KeyStore.publicKeyToString(keyPair.publicKey);
   RPCProvider
       provider; //need for the account to call methods and create transactions
   Account(
       {required this.accountId, required this.keyPair, required this.provider});
 
-  Future<Map<dynamic, dynamic>> sendTokens(double nearAmount, String receiver) async {
-    AccessKey accessKey = await getAccessKey();
+  Future<Map<dynamic, dynamic>> sendTokens(
+      double nearAmount, String receiver) async {
+    AccessKey accessKey = await findAccessKey();
 
     // Create Transaction
     accessKey.nonce++;
@@ -48,7 +49,8 @@ class Account {
 
     // Serialize Signed Transaction
     Uint8List serializedSignedTransaction =
-        TransactionManager.serializeSignedTransferTransaction(transaction, signature);
+        TransactionManager.serializeSignedTransferTransaction(
+            transaction, signature);
     String encodedTransaction =
         TransactionManager.encodeSerialization(serializedSignedTransaction);
 
@@ -56,8 +58,8 @@ class Account {
     return await provider.broadcastTransaction(encodedTransaction);
   }
 
-  Future<AccessKey> getAccessKey() async {
-    return await provider.getAccessKey(
+  Future<AccessKey> findAccessKey() async {
+    return await provider.findAccessKey(
         accountId, KeyStore.publicKeyToString(keyPair.publicKey));
   }
 }
