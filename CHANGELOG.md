@@ -1,3 +1,6 @@
+## 0.0.4-alpha
+Exported AccessKey class.
+
 ## 0.0.3-alpha
 Added flutter example to the package doc.
 
