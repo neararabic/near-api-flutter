@@ -1,5 +1,5 @@
 ## 0.0.5-alpha
-Exported AccessKey class.
+Handle null if access key not found.
 
 ## 0.0.4-alpha
 Exported AccessKey class.
