@@ -7,3 +7,4 @@ export 'package:near_api_flutter/src/key_store.dart';
 export 'package:near_api_flutter/src/wallet_access_config.dart';
 export 'package:near_api_flutter/src/wallet.dart';
 export 'package:near_api_flutter/src/transaction_api/rpc_providers.dart';
+export 'package:near_api_flutter/src/models/access_key.dart';
