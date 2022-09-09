@@ -1,3 +1,6 @@
+## 0.0.6-alpha
+Wrapped public and private key classes for front-end flexibility
+
 ## 0.0.5-alpha
 Handle null if access key not found.
 
