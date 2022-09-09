@@ -64,4 +64,33 @@ abstract class RPCProvider {
       return {"EXCEPTION": exp};
     }
   }
+
+  // Allows you to call a contract method as a view function.
+  Future<Map<dynamic, dynamic>> callViewFunction(
+      String contractId, String methodName, String methodArgs) async {
+    var body = json.encode({
+      "jsonrpc": "2.0",
+      "id": "dontcare",
+      "method": "query",
+      "params": {
+        "request_type": "call_function",
+        "finality": "final",
+        "account_id": contractId,
+        "method_name": methodName,
+        "args_base64": methodArgs
+      }
+    });
+
+    Map<String, String> headers = {};
+    headers[Constants.contentType] = Constants.applicationJson;
+
+    try {
+      http.Response responseData =
+          await http.post(Uri.parse(providerURL), headers: headers, body: body);
+      Map jsonBody = jsonDecode(responseData.body);
+      return jsonBody;
+    } catch (exp) {
+      return {"EXCEPTION": exp};
+    }
+  }
 }

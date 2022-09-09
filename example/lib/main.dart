@@ -158,6 +158,20 @@ class _MyHomePageState extends State<MyHomePage> {
                   setState(() {});
                 },
                 child: Text("Call with ${"1".toString()} Near deposit"),
+              ),
+              ElevatedButton(
+                //call method
+                onPressed: () async {
+                  String contractId = 'friendbook.hamzatest.testnet';
+                  String method = 'getAllMessages';
+                  String methodArgs = '';
+
+                  Contract contract = Contract(contractId, connectedAccount);
+                  response = await NEARTester.callViewMethod(
+                      contract, method, methodArgs);
+                  setState(() {});
+                },
+                child: const Text("Call view function"),
               )
             ],
           )),
@@ -186,10 +200,19 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
         child: buildCopyableText(
-            "Function Respones",
+            "Function Response",
             (utf8.decode(base64.decoder
                 .convert(response['result']['status']['SuccessValue'])))),
       ));
+    } else if (response.isNotEmpty &&
+        response.containsKey('result') &&
+        response['result'].containsKey('result')) {
+      String resultDecoded =
+          utf8.decode(response['result']['result'].cast<int>());
+      return Card(
+          child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+              child: buildCopyableText("Function Response", resultDecoded)));
     } else {
       return Container();
     }
@@ -265,6 +288,20 @@ class _MyHomePageState extends State<MyHomePage> {
                   setState(() {});
                 },
                 child: Text("Call with ${"1".toString()} Near deposit"),
+              ),
+              ElevatedButton(
+                //call method
+                onPressed: () async {
+                  String contractId = 'friendbook.hamzatest.testnet';
+                  String method = 'getAllMessages';
+                  String methodArgs = '';
+
+                  Contract contract = Contract(contractId, connectedAccount);
+                  response = await NEARTester.callViewMethod(
+                      contract, method, methodArgs);
+                  setState(() {});
+                },
+                child: const Text("Call view function"),
               )
             ],
           )),
@@ -337,6 +374,11 @@ class NEARTester {
   //contract holds the account to use for calling
   static callMethodLimitedAccess(Contract contract, String method, args) async {
     var result = await contract.callFunction(method, args);
+    return result;
+  }
+
+  static callViewMethod(Contract contract, String method, args) async {
+    var result = await contract.callViewFuntion(method, args);
     return result;
   }
 
