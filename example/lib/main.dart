@@ -38,19 +38,25 @@ class _MyHomePageState extends State<MyHomePage> {
   Map response = {};
   String contractId = 'friendbook.hamzatest.testnet';
   String method = 'submitMessage';
-  String signerId = 'hamzatest.testnet';
 
   late Account connectedAccount;
+
+
+  String signerId = "yomna.testnet";
+  String userAccount = "yomna.testnet";
+
+  final _textUserIdController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
+    _textUserIdController.text = "yomna.testnet";
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -62,12 +68,10 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               "Mutate State Method: $method",
             ),
-            Text(
-              "User: $signerId",
-            ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                buildUserId(),
                 buildLimitedAccessCard(),
                 buildFullAccessCard(),
                 buildFunctionResponseCard(),
@@ -93,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   String walletURL = 'https://wallet.testnet.near.org/login/?';
                   String contractId = 'friendbook.hamzatest.testnet';
                   String appTitle = 'Friendbook';
-                  String accountId = 'hamzatest.testnet';
+                  String accountId = userAccount;
                   String nearSignInSuccessUrl =
                       'https://near-transaction-serializer.herokuapp.com/success';
                   String nearSignInFailUrl =
@@ -236,7 +240,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   String walletURL = 'https://wallet.testnet.near.org/login/?';
                   String contractId = 'friendbook.hamzatest.testnet';
                   String appTitle = 'Friendbook';
-                  String accountId = 'hamzatest.testnet';
+                  String accountId = userAccount;
                   String nearSignInSuccessUrl =
                       'https://near-transaction-serializer.herokuapp.com/success';
                   String nearSignInFailUrl =
@@ -255,7 +259,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ElevatedButton(
                 onPressed: () async {
                   response = await NEARTester.transferNear(
-                      connectedAccount, 1.0, "hamzatest.testnet");
+                      connectedAccount, 1.0, userAccount);
                   setState(() {});
                 },
                 child: Text("Transfer ${"1".toString()} Near"),
@@ -292,7 +296,8 @@ class _MyHomePageState extends State<MyHomePage> {
               ElevatedButton(
                 //call method
                 onPressed: () async {
-                  String contractId = 'friendbook.hamzatest.testnet';
+                  String contractId = 'friendbook.hamzatest.tes'
+                      '++++++tnet';
                   String method = 'getAllMessages';
                   String methodArgs = '';
 
@@ -329,6 +334,25 @@ class _MyHomePageState extends State<MyHomePage> {
     } else {
       return Container();
     }
+  }
+
+  buildUserId() {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('User Id to connect with:', style: TextStyle(fontWeight: FontWeight.bold),),
+            TextField(
+              onChanged: (str){
+                userAccount = str;
+              },
+            controller: _textUserIdController,
+          )],
+        ),
+      ),
+    );
   }
 }
 

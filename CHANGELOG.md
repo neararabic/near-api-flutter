@@ -1,3 +1,6 @@
+## 0.0.8-alpha
+Fix urls not launching in iOS devices
+
 ## 0.0.7-alpha
 Added view function call
 
