@@ -1,7 +1,7 @@
+import 'dart:convert';
 import 'dart:typed_data';
 import 'package:near_api_flutter/near_api_flutter.dart';
 import 'package:near_api_flutter/src/constants.dart';
-import 'package:near_api_flutter/src/models/access_key.dart';
 import 'package:near_api_flutter/src/models/action_types.dart';
 import 'package:near_api_flutter/src/models/transaction_dto.dart';
 import 'package:near_api_flutter/src/transaction_api/transaction_manager.dart';
@@ -94,9 +94,10 @@ class Contract {
     return {"Result": "Please follow wallet to approve transaction"};
   }
 
-  Future<Map<dynamic, dynamic>> viewFunction(
-      String functionName, String functionArgs,
-      [double nearAmount = 0.0, int gasFees = Constants.defaultGas]) async {
-    return callFunction(functionName, functionArgs, nearAmount, gasFees);
+  Future<Map<dynamic, dynamic>> callViewFuntion(String methodName, String methodArgs) async {
+    List<int> bytes = utf8.encode(methodArgs);
+    String base64MethodArgs = base64.encode(bytes);
+    return await callerAccount.provider
+        .callViewFunction(contractId, methodName, base64MethodArgs);
   }
 }

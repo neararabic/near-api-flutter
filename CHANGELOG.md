@@ -1,3 +1,6 @@
+## 0.0.7-alpha
+Added view function call
+
 ## 0.0.6-alpha
 Wrapped public and private key classes for front-end flexibility
 
