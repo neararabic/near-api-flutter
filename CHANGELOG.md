@@ -1,3 +1,6 @@
+## 0.0.10-alpha
+Example uses near friendbook.nearflutter.testnet as its contract
+
 ## 0.0.9-alpha
 Fixs to pass package static analysis
 
