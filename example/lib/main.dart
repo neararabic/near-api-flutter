@@ -36,8 +36,9 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   Map response = {};
-  String contractId = 'friendbook.hamzatest.testnet';
-  String method = 'submitMessage';
+  String contractId = 'friendbook.nearflutter.testnet';
+  String mutateMethod = 'submitMessage';
+  String viewMethod = 'getAllMessages';
 
   late Account connectedAccount;
 
@@ -65,7 +66,10 @@ class _MyHomePageState extends State<MyHomePage> {
               "Contract: $contractId",
             ),
             Text(
-              "Mutate State Method: $method",
+              "Mutate Method: $mutateMethod",
+            ),
+            Text(
+              "View Method: $viewMethod",
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -94,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 //connect
                 onPressed: () {
                   String walletURL = 'https://wallet.testnet.near.org/login/?';
-                  String contractId = 'friendbook.hamzatest.testnet';
+                  String contractId = 'friendbook.nearflutter.testnet';
                   String appTitle = 'Friendbook';
                   String accountId = userAccount;
                   String nearSignInSuccessUrl =
@@ -118,7 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   String method = 'submitMessage';
                   String methodArgs =
                       '{"content":"message text","receiver":"htahir.testnet"}';
-                  String contractId = 'friendbook.hamzatest.testnet';
+                  String contractId = 'friendbook.nearflutter.testnet';
 
                   Contract contract = Contract(contractId, connectedAccount);
                   response = await NEARTester.callMethodLimitedAccess(
@@ -137,7 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   String method = 'submitMessage';
                   String methodArgs =
                       '{"content":"message text","receiver":"htahir.testnet"}';
-                  String contractId = 'friendbook.hamzatest.testnet';
+                  String contractId = 'friendbook.nearflutter.testnet';
                   String nearSignInSuccessUrl =
                       'https://near-transaction-serializer.herokuapp.com/success';
                   String nearSignInFailUrl =
@@ -165,8 +169,8 @@ class _MyHomePageState extends State<MyHomePage> {
               ElevatedButton(
                 //call method
                 onPressed: () async {
-                  String contractId = 'friendbook.hamzatest.testnet';
-                  String method = 'getAllMessages';
+                  String contractId = 'friendbook.nearflutter.testnet';
+                  String method = viewMethod;
                   String methodArgs = '';
 
                   Contract contract = Contract(contractId, connectedAccount);
@@ -237,7 +241,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   }
 
                   String walletURL = 'https://wallet.testnet.near.org/login/?';
-                  String contractId = 'friendbook.hamzatest.testnet';
+                  String contractId = 'friendbook.nearflutter.testnet';
                   String appTitle = 'Friendbook';
                   String accountId = userAccount;
                   String nearSignInSuccessUrl =
@@ -268,7 +272,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   String method = 'submitMessage';
                   String methodArgs =
                       '{"content":"message text","receiver":"htahir.testnet"}';
-                  String contractId = 'friendbook.hamzatest.testnet';
+                  String contractId = 'friendbook.nearflutter.testnet';
                   Contract contract = Contract(contractId, connectedAccount);
 
                   response = await NEARTester.callMethodFullAccess(
@@ -282,7 +286,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   String method = 'submitMessage';
                   String methodArgs =
                       '{"content":"message text","receiver":"htahir.testnet"}';
-                  String contractId = 'friendbook.hamzatest.testnet';
+                  String contractId = 'friendbook.nearflutter.testnet';
 
                   Contract contract = Contract(contractId, connectedAccount);
 
@@ -295,8 +299,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ElevatedButton(
                 //call method
                 onPressed: () async {
-                  String contractId = 'friendbook.hamzatest.tes'
-                      '++++++tnet';
+                  String contractId = 'friendbook.nearflutter.testnet';
                   String method = 'getAllMessages';
                   String methodArgs = '';
 
