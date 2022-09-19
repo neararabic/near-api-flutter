@@ -20,8 +20,10 @@ class Wallet {
     String url = '$walletURL&success_url=$successURL'
         '&failure_url=$failureURL&public_key=ed25519:'
         '$publicKey';
-    await launchUrl(Uri.parse(url));
+    await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
   }
+
+
 
   //request transaction deposit approval from wallet
   requestDepositApproval(
@@ -30,6 +32,6 @@ class Wallet {
         '${approveTxURL}transactions=${Uri.encodeComponent(encodedTransaction)}'
         '&callbackUrl=$successURL';
 
-    await launchUrl(Uri.parse(url));
+    await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
   }
 }
