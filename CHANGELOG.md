@@ -1,3 +1,6 @@
+## 0.0.11-alpha
+Added documentation comments to classes and funcitons
+
 ## 0.0.10-alpha
 Example uses near friendbook.nearflutter.testnet as its contract
 
