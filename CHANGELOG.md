@@ -1,3 +1,6 @@
+## 0.0.9-alpha
+Fixs to pass package static analysis
+
 ## 0.0.8-alpha
 Fix urls not launching in iOS devices and updated example with account IDs as input
 

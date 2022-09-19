@@ -1,4 +1,4 @@
-class Constants{
+class Constants {
   static const int defaultGas = 30000000000000;
   static const String contentType = "Content-Type";
   static const String applicationJson = "application/json";

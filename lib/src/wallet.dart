@@ -6,8 +6,7 @@ class Wallet {
   String walletURL;
 
   Wallet(this.walletURL);
-  connect(
-      contractId, appTitle, successURL, failureURL, publicKey) async {
+  connect(contractId, appTitle, successURL, failureURL, publicKey) async {
     String url = '$walletURL&success_url=$successURL'
         '&failure_url=$failureURL'
         '&contract_id=$contractId&public_key=ed25519:'
@@ -15,8 +14,6 @@ class Wallet {
 
     await launchUrl(Uri.parse(url));
   }
-
-
 
   connectWithFullAccess(
       contractId, appTitle, successURL, failureURL, publicKey) async {

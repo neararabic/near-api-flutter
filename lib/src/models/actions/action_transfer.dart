@@ -1,7 +1,6 @@
 import 'package:borsh_annotation/borsh_annotation.dart';
 part 'action_transfer.g.dart';
 
-
 @BorshSerializable()
 class TransferAction with _$TransferAction {
   factory TransferAction({
@@ -14,6 +13,7 @@ class TransferAction with _$TransferAction {
   factory TransferAction.fromBorsh(Uint8List data) =>
       _$TransferActionFromBorsh(data);
 }
+
 @BorshSerializable()
 class TransferActionArgs with _$TransferActionArgs {
   factory TransferActionArgs({
@@ -22,5 +22,6 @@ class TransferActionArgs with _$TransferActionArgs {
 
   TransferActionArgs._();
 
-  factory TransferActionArgs.fromBorsh(Uint8List data) => _$TransferActionArgsFromBorsh(data);
+  factory TransferActionArgs.fromBorsh(Uint8List data) =>
+      _$TransferActionArgsFromBorsh(data);
 }

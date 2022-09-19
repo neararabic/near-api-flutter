@@ -5,7 +5,8 @@ part 'action_function_call.g.dart';
 class FunctionCallAction with _$FunctionCallAction {
   factory FunctionCallAction({
     @BU8() required int actionNumber,
-    @BFunctionCallActionArgs() required FunctionCallActionArgs functionCallActionArgs,
+    @BFunctionCallActionArgs()
+        required FunctionCallActionArgs functionCallActionArgs,
   }) = _FunctionCallAction;
 
   FunctionCallAction._();
@@ -28,4 +29,3 @@ class FunctionCallActionArgs with _$FunctionCallActionArgs {
   factory FunctionCallActionArgs.fromBorsh(Uint8List data) =>
       _$FunctionCallActionArgsFromBorsh(data);
 }
-

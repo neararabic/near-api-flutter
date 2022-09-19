@@ -10,6 +10,5 @@ class PublicKey with _$PublicKey {
 
   PublicKey._();
 
-  factory PublicKey.fromBorsh(Uint8List data) =>
-      _$PublicKeyFromBorsh(data);
+  factory PublicKey.fromBorsh(Uint8List data) => _$PublicKeyFromBorsh(data);
 }

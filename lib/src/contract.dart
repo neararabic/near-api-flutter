@@ -94,7 +94,8 @@ class Contract {
     return {"Result": "Please follow wallet to approve transaction"};
   }
 
-  Future<Map<dynamic, dynamic>> callViewFuntion(String methodName, String methodArgs) async {
+  Future<Map<dynamic, dynamic>> callViewFuntion(
+      String methodName, String methodArgs) async {
     List<int> bytes = utf8.encode(methodArgs);
     String base64MethodArgs = base64.encode(bytes);
     return await callerAccount.provider

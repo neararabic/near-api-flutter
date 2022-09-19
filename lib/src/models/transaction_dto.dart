@@ -12,7 +12,7 @@ class Transaction {
   String methodArgs;
   AccessKey accessKey;
 
-   Transaction(
+  Transaction(
       {required this.actionType,
       required this.signer,
       required this.publicKey,
@@ -22,6 +22,4 @@ class Transaction {
       required this.methodName,
       required this.methodArgs,
       required this.accessKey});
-
-
 }

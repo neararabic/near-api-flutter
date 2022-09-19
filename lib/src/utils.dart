@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-class Utils{
+class Utils {
   static int _binaryStringToInt(String binaryString) {
     final pattern = RegExp(r'(?:0x)?(\d+)');
     return int.parse(pattern.firstMatch(binaryString)!.group(1)!, radix: 2);
@@ -8,7 +8,8 @@ class Utils{
 
   static Uint8List decodeNearDeposit(String amount) {
     double nearAmount = 1000000000000.0 * double.parse(amount);
-    BigInt nearBigNumber = BigInt.parse("${nearAmount.toStringAsFixed(0)}000000000000");
+    BigInt nearBigNumber =
+        BigInt.parse("${nearAmount.toStringAsFixed(0)}000000000000");
     String nearBinary = nearBigNumber.toRadixString(2);
     String nearU128Binary = nearBinary.padLeft(128, '0');
     List near8BitList = [];
@@ -24,5 +25,4 @@ class Utils{
     }
     return deposit;
   }
-
 }

@@ -11,7 +11,9 @@ class PublicKey extends ed.PublicKey {
 }
 
 class KeyPair extends ed.KeyPair {
+  // ignore: overridden_fields, annotate_overrides
   PrivateKey privateKey;
+  // ignore: annotate_overrides, overridden_fields
   PublicKey publicKey;
 
   KeyPair(this.privateKey, this.publicKey) : super(privateKey, publicKey);

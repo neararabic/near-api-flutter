@@ -41,7 +41,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   late Account connectedAccount;
 
-
   String signerId = "yomna.testnet";
   String userAccount = "yomna.testnet";
 
@@ -343,13 +342,17 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('User Id to connect with:', style: TextStyle(fontWeight: FontWeight.bold),),
+            const Text(
+              'User Id to connect with:',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
             TextField(
-              onChanged: (str){
+              onChanged: (str) {
                 userAccount = str;
               },
-            controller: _textUserIdController,
-          )],
+              controller: _textUserIdController,
+            )
+          ],
         ),
       ),
     );

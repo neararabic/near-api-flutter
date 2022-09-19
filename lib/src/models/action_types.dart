@@ -1,4 +1,4 @@
-enum ActionType{
+enum ActionType {
   createAccount(0),
   deployContract(1),
   functionCall(2),
@@ -11,7 +11,7 @@ enum ActionType{
   const ActionType(this.value);
   final int value;
 
-  static ActionType getByValue(int i){
+  static ActionType getByValue(int i) {
     return ActionType.values.firstWhere((x) => x.value == i);
   }
 }

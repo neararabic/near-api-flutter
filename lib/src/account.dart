@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 import 'package:near_api_flutter/near_api_flutter.dart';
 import 'package:near_api_flutter/src/constants.dart';
-import 'package:near_api_flutter/src/models/access_key.dart';
 import 'package:near_api_flutter/src/models/action_types.dart';
 import 'package:near_api_flutter/src/models/transaction_dto.dart';
 import 'package:near_api_flutter/src/transaction_api/transaction_manager.dart';
