@@ -15,7 +15,7 @@ import '../models/transactions/transaction_function_call.dart';
 import '../models/transactions/transaction_transfer.dart';
 import '../utils.dart';
 
-/// The dart method for key generation and transaction signing
+// The dart method for key generation and transaction signing
 class TransactionManager {
   static Uint8List serializeTransferTransaction(Transaction transaction) {
     return TransferTransaction(

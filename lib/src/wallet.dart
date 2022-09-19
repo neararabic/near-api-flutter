@@ -1,11 +1,13 @@
 import 'package:url_launcher/url_launcher.dart';
 
-/// redirects users to NEAR wallet for key management
+/// Redirects users to NEAR wallet for key management
 /// wrapper for connected account information i.e.
 class Wallet {
   String walletURL;
 
   Wallet(this.walletURL);
+
+  /// Requests function access key
   connect(contractId, appTitle, successURL, failureURL, publicKey) async {
     String url = '$walletURL&success_url=$successURL'
         '&failure_url=$failureURL'
@@ -15,6 +17,7 @@ class Wallet {
     await launchUrl(Uri.parse(url));
   }
 
+  /// Requests full access key
   connectWithFullAccess(
       contractId, appTitle, successURL, failureURL, publicKey) async {
     String url = '$walletURL&success_url=$successURL'
@@ -23,7 +26,7 @@ class Wallet {
     await launchUrl(Uri.parse(url));
   }
 
-  //request transaction deposit approval from wallet
+  /// Request transaction deposit approval from wallet
   requestDepositApproval(
       String encodedTransaction, successURL, failureURL, approveTxURL) async {
     String url =

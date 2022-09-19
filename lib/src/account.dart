@@ -5,8 +5,8 @@ import 'package:near_api_flutter/src/models/action_types.dart';
 import 'package:near_api_flutter/src/models/transaction_dto.dart';
 import 'package:near_api_flutter/src/transaction_api/transaction_manager.dart';
 
-///This class provides common account related RPC calls
-///including signing transactions with a KeyPair.
+/// This class provides common account related RPC calls
+/// including signing transactions with a KeyPair.
 class Account {
   String accountId;
   KeyPair keyPair;
@@ -17,6 +17,7 @@ class Account {
   Account(
       {required this.accountId, required this.keyPair, required this.provider});
 
+  /// Transfer near from account to receiver
   Future<Map<dynamic, dynamic>> sendTokens(
       double nearAmount, String receiver) async {
     AccessKey accessKey = await findAccessKey();
@@ -57,6 +58,7 @@ class Account {
     return await provider.broadcastTransaction(encodedTransaction);
   }
 
+  /// Gets user accessKey information
   Future<AccessKey> findAccessKey() async {
     return await provider.findAccessKey(
         accountId, KeyStore.publicKeyToString(keyPair.publicKey));

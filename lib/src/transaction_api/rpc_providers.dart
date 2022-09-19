@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:near_api_flutter/src/models/access_key.dart';
 import '../constants.dart';
 
+/// Stores near testnet rpc configuration
 class NEARTestNetRPCProvider extends RPCProvider {
   static final NEARTestNetRPCProvider _nearTestNetRPCProvider =
       NEARTestNetRPCProvider._internal();
@@ -15,12 +16,13 @@ class NEARTestNetRPCProvider extends RPCProvider {
       : super('https://archival-rpc.testnet.near.org');
 }
 
+/// Manages RPC calls
 abstract class RPCProvider {
   String providerURL;
 
   RPCProvider(this.providerURL);
 
-  //call near RPC API's getAccessKeys for nonce and block hash
+  /// Calls near RPC API's getAccessKeys for nonce and block hash
   Future<AccessKey> findAccessKey(accountId, publicKey) async {
     var body = json.encode({
       "jsonrpc": "2.0",
@@ -43,7 +45,7 @@ abstract class RPCProvider {
     return AccessKey.fromJson(jsonBody['result']);
   }
 
-  //broadcastTransaction
+  /// Calls near RPC API's broadcast_tx_commit to broadcast the transaction and waits until transaction is fully complete.
   Future<Map<dynamic, dynamic>> broadcastTransaction(
       String encodedTransaction) async {
     var body = json.encode({
@@ -65,7 +67,7 @@ abstract class RPCProvider {
     }
   }
 
-  // Allows you to call a contract method as a view function.
+  /// Allows you to call a contract method as a view function.
   Future<Map<dynamic, dynamic>> callViewFunction(
       String contractId, String methodName, String methodArgs) async {
     var body = json.encode({

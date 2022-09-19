@@ -6,13 +6,14 @@ import 'package:near_api_flutter/src/models/action_types.dart';
 import 'package:near_api_flutter/src/models/transaction_dto.dart';
 import 'package:near_api_flutter/src/transaction_api/transaction_manager.dart';
 
-///represents a contract entity: contractId, view methods, and change methods
+/// Represents a contract entity: contractId, view methods, and change methods
 class Contract {
   String contractId;
   Account callerAccount; //account to sign change method transactions
 
   Contract(this.contractId, this.callerAccount);
 
+  /// Calls contract mutate state functions
   Future<Map<dynamic, dynamic>> callFunction(
       String functionName, String functionArgs,
       [double nearAmount = 0.0, int gasFees = Constants.defaultGas]) async {
@@ -94,6 +95,7 @@ class Contract {
     return {"Result": "Please follow wallet to approve transaction"};
   }
 
+  /// Calls contract view functions
   Future<Map<dynamic, dynamic>> callViewFuntion(
       String methodName, String methodArgs) async {
     List<int> bytes = utf8.encode(methodArgs);
