@@ -12,7 +12,7 @@ class Wallet {
         '&contract_id=$contractId&public_key=ed25519:'
         '$publicKey';
 
-    await launchUrl(Uri.parse(url));
+    await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
   }
 
   connectWithFullAccess(
