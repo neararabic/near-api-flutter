@@ -39,18 +39,14 @@ class _MyHomePageState extends State<MyHomePage> {
   String contractId = 'friendbook.nearflutter.testnet';
   String mutateMethod = 'submitMessage';
   String viewMethod = 'getAllMessages';
-
   late Account connectedAccount;
-
-  String signerId = "yomna.testnet";
-  String userAccount = "yomna.testnet";
-
+  String userAccount = 'neararabic.testnet';
   final _textUserIdController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _textUserIdController.text = "yomna.testnet";
+    _textUserIdController.text = "nearflutter.testnet";
   }
 
   @override

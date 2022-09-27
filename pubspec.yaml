@@ -1,6 +1,6 @@
 name: near_api_flutter
 description: NEAR Flutter API is here to empower mobile developers to build flutter apps that connect and send transactions to the NEAR PROTOCOL Blockchain.
-version: 0.0.11-alpha
+version: 0.0.12-alpha
 homepage: https://github.com/neararabic/near-api-flutter
 
 environment:

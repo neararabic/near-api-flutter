@@ -1,3 +1,6 @@
+## 0.0.12-alpha
+Cleaned package and example
+
 ## 0.0.11-alpha
 Added documentation comments to classes and funcitons
 
