@@ -1,3 +1,6 @@
+## 0.0.13-alpha
+Exported utils class
+
 ## 0.0.12-alpha
 Cleaned package and example
 
